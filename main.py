@@ -28,7 +28,7 @@ if __name__ == '__main__':
     
     # (1) If action is "config" or "list", we don't care an instance argment
     if args.action == "config":
-        # Append a new instance data interactively
+        # Add a new instance data interactively
         print(f"Append a new instance data to the config file: {args.config}")
         print("Instance name (e.g., my_gpu_instance)")
         instance_name = input("> ") or None

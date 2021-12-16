@@ -18,7 +18,7 @@ gh extension install matsui528/gh-ec2
 
 ## Usage
 - `gh ec2 config`
-    - Append the instance's information to `~/.instance_list.json` interactively.
+    - Add the instance's information to `~/.instance_list.json` interactively.
     - For exmple:
       ```console
       Instance name (e.g., my_gpu_instance)
