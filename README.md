@@ -22,7 +22,7 @@ gh extension install matsui528/gh-ec2
     - For exmple:
       ```console
       Instance name (e.g., my_gpu_instance)
-      > my_high_memory_instance    <- Anyname is fine
+      > my_high_memory_instance    <- Any name is fine
       Instance ID (e.g., i-07hgaxses4adf097a)
       > i-rld9jre423jdfe           <- You can obtain it by AWS EC2 console  
       Profile (default: "default")
@@ -39,9 +39,14 @@ gh extension install matsui528/gh-ec2
 - `gh ec2 stop INSTANCE_NAME`
     - Stop the instance.
 - `gh ec2 ssh INSTANCE_NAME`
-    - Log in the instance by SSH
+    - Log in the instance by SSH.
 - `gh ec2 nautilus INSTANCE_NAME`
-    - Open the nautilus to the instance.
+    - Open the home directory of the instance remotely by nautilus.
 - `gh ec2 ip INSTANCE_NAME`
     - Get the IP of the instance.
 
+## Tips
+- How to modify the config file?
+    - Edit `~/.instance_list.json` directly.
+- How to specify a different config file?
+    - Run the command with `--config YOUR_CONFIG_FILE`, e.g., `gh ec2 config --config SOMEWHERE/my_config.json`
