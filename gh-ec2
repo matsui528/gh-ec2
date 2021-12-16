@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+
+# Determine if an executable is in the PATH
+if ! type -p python >/dev/null; then
+  echo "Python not found on the system" >&2
+  exit 1
+fi
+
+if ! type -p aws >/dev/null; then
+  echo "awscli not found on the system" >&2
+  exit 1
+fi
+
+# $0: the path to this script
+# dirname $0: the directory of this script
+python `dirname $0`/main.py "$@"
+
