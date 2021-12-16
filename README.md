@@ -26,9 +26,9 @@ gh extension install matsui528/gh-ec2
       Instance ID (e.g., i-07hgaxses4adf097a)
       > i-rld9jre423jdfe           <- You can obtain it by AWS EC2 console  
       Profile (default: "default")
-      >                        <- Press enter if you use the default option
+      >                            <- Press enter if you use the default option
       Path to the key (default: "~/.ssh/id_rsa")
-      >                        <- Press enter if you use the default option
+      >                            <- Press enter if you use the default option
       ```
 - `gh ec2 list`
     - Show the information of all instances.
