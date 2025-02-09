@@ -12,11 +12,11 @@ if ! type -p aws >/dev/null; then
   exit 1
 fi
 
-# Wait for SSH authentication to complete
-echo "Waiting for SSH authentication to complete..."
-while ! ssh-add -l >/dev/null 2>&1; do
-  sleep 1
-done
+# Check and trigger SSH authentication if necessary
+if ! ssh-add -l >/dev/null 2>&1; then
+  echo "No SSH identities loaded. Attempting to add default key (~/.ssh/id_rsa)..."
+  ssh-add ~/.ssh/id_rsa
+fi
 
 # $0: the path to this script
 # dirname $0: the directory of this script
