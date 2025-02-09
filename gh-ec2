@@ -14,5 +14,5 @@ fi
 
 # $0: the path to this script
 # dirname $0: the directory of this script
-python `dirname $0`/main.py "$@"
+python $(dirname $0)/main.py "$@"
 
