@@ -12,6 +12,12 @@ if ! type -p aws >/dev/null; then
   exit 1
 fi
 
+# Wait for SSH authentication to complete
+echo "Waiting for SSH authentication to complete..."
+while ! ssh-add -l >/dev/null 2>&1; do
+  sleep 1
+done
+
 # $0: the path to this script
 # dirname $0: the directory of this script
 python $(dirname $0)/main.py "$@"
