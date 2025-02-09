@@ -12,9 +12,10 @@ if ! type -p aws >/dev/null; then
   exit 1
 fi
 
-# Check and trigger SSH authentication if necessary
+# Ensure SSH authentication is completed
 if ! ssh-add -l >/dev/null 2>&1; then
-  echo "No SSH identities loaded. Attempting to add default key (~/.ssh/id_rsa)..."
+  echo "No SSH identities loaded. Starting SSH agent and adding default key (~/.ssh/id_rsa)..."
+  eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_rsa
 fi
 
