@@ -1,5 +1,5 @@
 import argparse
-import subprocess
+import boto3
 import json
 import sys
 from pathlib import Path
@@ -16,10 +16,11 @@ parser.add_argument("--config",
 
 
 def get_ip(instance_id, profile):
-    ip = subprocess.run("aws ec2 describe-instances --instance-ids {} "
-                        "--query 'Reservations[0].Instances[0].PublicIpAddress' --profile {}".format(instance_id, profile),
-                        shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode("utf8")
-    return ip.strip().strip('"')  # '"XX.XXX.XX.XXX"\n' -> 'XX.XXX.XX.XXX'
+    session = boto3.Session(profile_name=profile)
+    ec2 = session.client('ec2')
+    response = ec2.describe_instances(InstanceIds=[instance_id])
+    ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+    return ip
 
 
 if __name__ == '__main__':
@@ -91,12 +92,16 @@ if __name__ == '__main__':
     if instance_id is None:
         sys.exit(f"Error: Cannot find {args.instance} in {args.config}")
 
+    session = boto3.Session(profile_name=profile)
+    ec2 = session.client('ec2')
+
     if args.action == "start":
-        subprocess.run(f"aws ec2 start-instances --instance-ids {instance_id} --profile {profile}", shell=True)
+        ec2.start_instances(InstanceIds=[instance_id])
     elif args.action == "stop":
-        subprocess.run(f"aws ec2 stop-instances --instance-ids {instance_id} --profile {profile}", shell=True)
+        ec2.stop_instances(InstanceIds=[instance_id])
     elif args.action == "status":
-        subprocess.run(f"aws ec2 describe-instance-status --instance-ids {instance_id} --profile {profile}", shell=True)
+        response = ec2.describe_instance_status(InstanceIds=[instance_id])
+        print(response)
     elif args.action == "ip":
         print(get_ip(instance_id, profile))
     elif args.action == "ssh":
@@ -105,7 +110,7 @@ if __name__ == '__main__':
     elif args.action == "nautilus":
         ip = get_ip(instance_id, profile)
         subprocess.run(f"ssh-add {path_key}", shell=True)
-        subprocess.run(f"nautilus sftp://ubuntu@{ip}", shell=True)  
+        subprocess.run(f"nautilus sftp://ubuntu@{ip}", shell=True)
 
 
 
