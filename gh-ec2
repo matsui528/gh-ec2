@@ -12,11 +12,15 @@ if ! type -p aws >/dev/null; then
   exit 1
 fi
 
-# Ensure SSH authentication is completed
-if ! ssh-add -l >/dev/null 2>&1; then
-  echo "No SSH identities loaded. Starting SSH agent and adding default key (~/.ssh/id_rsa)..."
-  eval "$(ssh-agent -s)"
-  ssh-add ~/.ssh/id_rsa
+# Check if SSH authentication is needed for this command
+# Only ssh and nautilus commands require SSH authentication
+if [[ "$1" == "ssh" ]] || [[ "$1" == "nautilus" ]]; then
+  # Ensure SSH authentication is completed
+  if ! ssh-add -l >/dev/null 2>&1; then
+    echo "No SSH identities loaded. Starting SSH agent and adding default key (~/.ssh/id_rsa)..."
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+  fi
 fi
 
 # $0: the path to this script
