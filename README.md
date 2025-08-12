@@ -14,6 +14,12 @@ Install the followings.
 gh extension install matsui528/gh-ec2
 ```
 
+## Update
+```
+gh extension upgrade matsui528/gh-ec2
+```
+
+
 
 
 ## Usage
