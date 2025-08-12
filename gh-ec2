@@ -18,6 +18,7 @@ if ! ssh-add -l >/dev/null 2>&1; then
   echo "No SSH identities loaded. Starting SSH agent and adding default key (~/.ssh/id_rsa)..."
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_rsa
+fi
 
 
 # $0: the path to this script
